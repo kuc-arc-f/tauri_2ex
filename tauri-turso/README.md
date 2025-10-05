@@ -39,4 +39,9 @@ npm run tauri dev
 ```
 
 ***
+### Blog
+
+https://zenn.dev/link/comments/dbc6437ca211c1
+
+***
 
