@@ -14,6 +14,11 @@
 Tauri Rust , Turso database example
 
 ***
+### Blog
+
+https://zenn.dev/knaka0209/scraps/21dfb8fdb3f9c0
+
+***
 # License
 
 * MIT
