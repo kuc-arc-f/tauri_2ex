@@ -16,6 +16,7 @@ import Todo from './client/Todo';
 import Sort from './client/Sort';
 import Table from './client/Table';
 import Table2 from './client/Table2';
+import Chat from './client/Chat';
 
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
@@ -31,6 +32,7 @@ function App() {
         <Route path="/sort" element={<Sort />} />
         <Route path="/table" element={<Table />} />
         <Route path="/table2" element={<Table2 />} />
+        <Route path="/chat" element={<Chat />} />
       </Routes>
     </HashRouter>
   </div>

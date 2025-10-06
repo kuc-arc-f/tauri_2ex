@@ -112,6 +112,53 @@ const DataUtil = {
 
     }
   },
+  threadCreate: async function(content: string, data: string, post_id: number): Promise<any>
+  {
+    try{
+      const retObj = {ret: 500, data: {}}
+    
+      const response = await invoke(
+        'chat_create_handler', { postId: post_id, content: content, data: data 
+      });
+      console.log(response);
+      return [];
+    }catch(e){
+      console.error(e);
+      throw new Error('Error, create')
+
+    }
+  },
+
+  
+  threadlist: async function(post_id: number , content: string, order: any): Promise<any>
+  {
+    try{
+      const retObj = {ret: 500, data: {}}
+    
+      const response = await invoke(
+        'chat_list_handler', { postId: post_id, content: content, order: order }
+      );
+      console.log(response);
+      const out = [];
+      if(response){
+        try {
+          const obj = JSON.parse(response);
+          obj.forEach((element) => {
+            //console.log(element.data);
+            element.data = JSON.parse(element.data);
+            out.push(element)
+          });
+          return out;
+        }catch(e){
+          console.log(e);
+        }
+      }
+      return [];
+    }catch(e){
+      console.error(e);
+      throw new Error('Error, list')
+    }
+  },
 
 };
 export default DataUtil;

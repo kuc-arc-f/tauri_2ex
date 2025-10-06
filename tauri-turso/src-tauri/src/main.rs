@@ -13,6 +13,7 @@ use serde_json::{json, Value};
 use std::env;
 use std::sync::Mutex;
 
+mod mod_chat;
 
 // データ構造
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -184,6 +185,31 @@ async fn update_data(
   Ok(1)
 }
 
+
+// Tauriコマンド: アイテム追加
+#[tauri::command]
+async fn chat_create_handler(postId: i64, content: String, data: String,
+) -> anyhow::Result<i64, String> {
+  println!("postId={}", postId);
+
+  let resp = mod_chat::create_handler(postId, content, data).await?;
+  Ok(1)
+}
+
+#[tauri::command]
+async fn chat_list_handler(
+    postId: i64,
+    content: String,
+    order: String,
+) -> anyhow::Result<String, i64> {
+  println!("postId={}", postId);
+
+  let resp = mod_chat::list_handler(postId, content, order).await?;
+  //println!("resp={}", resp);
+  Ok(resp.to_string())
+}
+
+
 fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
@@ -191,6 +217,8 @@ fn main() {
             list_data,
             delete_data,
             update_data,
+            chat_create_handler,
+            chat_list_handler,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");    

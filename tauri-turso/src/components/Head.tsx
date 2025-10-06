@@ -11,7 +11,8 @@ function Page() {
         <Link to="/sort">&nbsp; [ sort ]</Link>
         <Link to="/table">&nbsp; [ table ]</Link>
         <Link to="/table2">&nbsp; [ table2 ]</Link>
-
+        <hr />
+        <Link to="/chat" className="ms-2">[ chat ]</Link>
         <hr />
     </div>
     );
