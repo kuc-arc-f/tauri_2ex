@@ -4,8 +4,11 @@ import { Item, NewItem } from './types/Item';
 import ItemDialog from './Todo/ItemDialog';
 import { itemsApi } from './Todo/api';
 import Head from '../components/Head';
-const CONTENT = "todo";
+import ConfirmDialog from '../components/ConfirmDialog'
 
+const CONTENT = "todo";
+const CONFIRM_NAME_1 ="confirm_name_1"
+let DELETE_ID = 0;
 
 function App() {
   const [items, setItems] = useState<Item[]>([]);
@@ -80,6 +83,24 @@ function App() {
       setError('削除に失敗しました');
     }
   };
+  const confirmOpen1 = async function(){
+    const confirm1 = document.getElementById(CONFIRM_NAME_1);
+    try{
+        if(confirm1) { confirm1.showModal();}        
+    }catch(e){console.error(e)}
+  }
+
+  const cbFunc = async function(){
+    console.log("#cbFunc");
+    const dlg = document.getElementById(CONFIRM_NAME_1);
+    if(dlg) {
+      //@ts-ignore
+      dlg.close();
+      if(DELETE_ID > 0){
+        handleDelete(DELETE_ID);
+      }
+    }
+  }
 
   if (loading) {
     return (
@@ -148,7 +169,11 @@ function App() {
                             編集
                           </button>
                           <button
-                            onClick={() => handleDelete(item.id)}
+                            onClick={() => {
+                              DELETE_ID = Number(item.id);
+                              confirmOpen1()
+                              //handleDelete(item.id)
+                            }}
                             className="text-red-600 hover:text-red-900"
                           >
                             削除
@@ -171,6 +196,24 @@ function App() {
         item={editingItem}
         mode={dialogMode}
       />
+
+      <ConfirmDialog message={`Delete , OK ?`} cbFunction={cbFunc} name={CONFIRM_NAME_1} />
+
+      {/* CSS */}
+      <style>{`
+      dialog {
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          margin: 0;
+      }
+      dialog::backdrop {
+          background-color: rgba(200, 200, 200, 0.8);
+      }
+      `}
+      </style>  
+
     </div>
   );
 }
