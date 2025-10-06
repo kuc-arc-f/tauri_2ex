@@ -1,4 +1,5 @@
-import { invoke } from '@tauri-apps/api'
+import { invoke } from '@tauri-apps/api/core';
+ 
 let API_BASE = import.meta.env.VITE_API_URL;
 
 const DataUtil = {

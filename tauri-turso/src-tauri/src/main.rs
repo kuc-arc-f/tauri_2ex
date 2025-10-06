@@ -1,3 +1,6 @@
+// Prevents additional console window on Windows in release, DO NOT REMOVE!!
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+
 use anyhow::{ensure, Context, Result};
 use dotenvy::dotenv;
 use tauri::State;
@@ -9,6 +12,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use std::env;
 use std::sync::Mutex;
+
 
 // データ構造
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -180,8 +184,6 @@ async fn update_data(
   Ok(1)
 }
 
-
-//#[cfg_attr(mobile, tauri::mobile_entry_point)]
 fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
@@ -191,5 +193,6 @@ fn main() {
             update_data,
         ])
         .run(tauri::generate_context!())
-        .expect("error while running tauri application");
+        .expect("error while running tauri application");    
+    tauri_turso_lib::run()
 }
