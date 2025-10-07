@@ -34,4 +34,9 @@ npm run tauri dev
 ```
 
 ***
+### blog
+
+https://zenn.dev/knaka0209/scraps/b67ba7813a4bd0
+
+***
 
