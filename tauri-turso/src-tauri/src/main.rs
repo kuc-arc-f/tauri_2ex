@@ -14,6 +14,7 @@ use std::env;
 use std::sync::Mutex;
 
 mod mod_chat;
+mod mod_task;
 
 // データ構造
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -209,6 +210,46 @@ async fn chat_list_handler(
   Ok(resp.to_string())
 }
 
+#[tauri::command]
+async fn task_create(projectId: i64, content: String, data: String,
+) -> anyhow::Result<i64, String> {
+  println!("projectId={}", projectId);
+  let project_id = projectId;
+
+  let resp = mod_task::task_create_handler(project_id, content, data).await?;
+  Ok(1)
+}
+
+#[tauri::command]
+async fn task_list(
+    projectId: i64,
+    content: String,
+    order: String,
+) -> anyhow::Result<String, i64> {
+  println!("projectId={}", projectId);
+  let project_id = projectId;
+
+  let resp = mod_task::task_list_handler(project_id, content, order).await?;
+  Ok(resp.to_string())
+}
+
+#[tauri::command]
+async fn task_delete(content: String, id: i64, 
+) -> anyhow::Result<i64, String> {
+  println!("id={}", id);
+  let resp = mod_task::task_delete_handler(content, id).await?;
+  Ok(1)
+}
+
+#[tauri::command]
+async fn task_update(id: i64, content: String, data: String,
+) -> anyhow::Result<i64, String> {
+
+  let resp = mod_task::task_update_handler(id, data).await?;
+  Ok(1)
+}
+
+
 
 fn main() {
     tauri::Builder::default()
@@ -219,6 +260,10 @@ fn main() {
             update_data,
             chat_create_handler,
             chat_list_handler,
+            task_create,
+            task_list,
+            task_delete,
+            task_update,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");    

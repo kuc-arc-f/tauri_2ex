@@ -17,6 +17,8 @@ import Sort from './client/Sort';
 import Table from './client/Table';
 import Table2 from './client/Table2';
 import Chat from './client/Chat';
+import TaskProject from './client/TaskProject';
+import TaskItem from './client/TaskItem';
 
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
@@ -33,6 +35,8 @@ function App() {
         <Route path="/table" element={<Table />} />
         <Route path="/table2" element={<Table2 />} />
         <Route path="/chat" element={<Chat />} />
+        <Route path="/task_project" element={<TaskProject />} />
+        <Route path="/task_item" element={<TaskItem />} />
       </Routes>
     </HashRouter>
   </div>

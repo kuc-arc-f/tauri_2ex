@@ -13,6 +13,7 @@ function Page() {
         <Link to="/table2">&nbsp; [ table2 ]</Link>
         <hr />
         <Link to="/chat" className="ms-2">[ chat ]</Link>
+        <Link to="/task_project" className="ms-2">[ task ]</Link>
         <hr />
     </div>
     );

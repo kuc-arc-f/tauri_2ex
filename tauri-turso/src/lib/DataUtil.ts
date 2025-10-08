@@ -160,5 +160,69 @@ const DataUtil = {
     }
   },
 
+  taskItemlist: async function(project_id: number , content: string, order: any): Promise<any>
+  {
+    try{
+      const retObj = {ret: 500, data: {}}
+    
+      const response = await invoke(
+        'task_list', { projectId: project_id, content: content, order: order }
+      );
+      console.log(response);
+      const out = [];
+      if(response){
+        try {
+          const obj = JSON.parse(response);
+          obj.forEach((element) => {
+            //console.log(element.data);
+            element.data = JSON.parse(element.data);
+            out.push(element)
+          });
+          return out;
+        }catch(e){
+          console.log(e);
+        }
+      }
+      return [];
+    }catch(e){
+      console.error(e);
+      throw new Error('Error, list')
+    }
+  },
+
+  taskCreate: async function(projectId: number, content: string, target: any): Promise<any>
+  {
+    try{
+      const retObj = {ret: 500, data: {}}
+    
+      const response = await invoke(
+        'task_create', { projectId: projectId , content: content, data: target }
+      );
+      console.log(response);
+      return [];
+    }catch(e){
+      console.error(e);
+      throw new Error('Error, create')
+
+    }
+  },
+
+  taskDelete: async function(id: number, content: string): Promise<any>
+  {
+    try{
+      const retObj = {ret: 500, data: {}}
+    
+      const response = await invoke(
+        'task_delete', { content: content, id: id}
+      );
+      console.log(response);
+      return [];
+    }catch(e){
+      console.error(e);
+      throw new Error('Error, create')
+
+    }
+  },
+
 };
 export default DataUtil;
