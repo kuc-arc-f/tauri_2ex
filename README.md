@@ -25,6 +25,17 @@ https://zenn.dev/knaka0209/scraps/21dfb8fdb3f9c0
 
 ![img1](/image/ss1008a11.png)
 
+* tauri-turso/chat-show
+
+![img1](/image/ss1008a12.png)
+
+* tauri-turso/task-edit
+
+![img1](/image/ss1008a13.png)
+
+
+
+
 ***
 # License
 
