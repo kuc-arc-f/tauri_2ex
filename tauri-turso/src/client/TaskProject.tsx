@@ -5,7 +5,6 @@ import { Item, NewItem } from './types/Item';
 import { itemsApi } from './TaskProject/api';
 import ItemDialog from './TaskProject/ItemDialog';
 import dbUtil from './TaskProject/db';
-
 import {
   useReactTable,
   getCoreRowModel,
@@ -13,7 +12,8 @@ import {
   flexRender,
   ColumnDef,
 } from "@tanstack/react-table";
-import Head from '../components/Head';
+import Head from '../components/HeadHome';
+
 let sqlDb = null;
 let sortName = "asc";
 let sortAge = "asc";
@@ -68,8 +68,7 @@ export default function App() {
       header: "ID", 
       cell: ({ row }) => (
         <div className="rounded p-2 bg-white">
-          <h3 className="text-2xl font-bold">{row.original.data.name}</h3>
-          <br />
+          <h3 className="text-2xl font-bold ms-2">{row.original.data.name}</h3>
           <span className="ms-2">ID: {row.original.id}</span>
           
           <span className="ms-2">
