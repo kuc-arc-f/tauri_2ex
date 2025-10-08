@@ -43,12 +43,6 @@ npm run tauri dev
 
 https://zenn.dev/link/comments/dbc6437ca211c1
 
-***
-* images
-
-* tauri-turso/chat-list
-
-![img1](/image/ss1008a11.png)
 
 ***
 

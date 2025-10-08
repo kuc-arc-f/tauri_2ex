@@ -19,6 +19,13 @@ Tauri Rust , Turso database example
 https://zenn.dev/knaka0209/scraps/21dfb8fdb3f9c0
 
 ***
+* images
+
+* tauri-turso/chat-list
+
+![img1](/image/ss1008a11.png)
+
+***
 # License
 
 * MIT
