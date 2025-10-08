@@ -114,3 +114,25 @@ pub async fn list_handler(
 
   Ok(json_string_variable.to_string())
 }
+
+#[tauri::command]
+pub async fn delete_handler(
+    content: String, id: i64,
+) -> anyhow::Result<i64, String> {
+  dotenv().ok();
+
+  let url = env::var("TURSO_DATABASE_URL").expect("TURSO_DATABASE_URL must be set");
+  let token = env::var("TURSO_AUTH_TOKEN").expect("TURSO_AUTH_TOKEN must be set");
+  println!("TURSO_DATABASE_URL={}", url);
+  let db = Builder::new_remote(url, token).build().await.unwrap();
+  let conn = db.connect().unwrap();    
+  println!("id={}", id);
+  let sql = format!("DELETE FROM chat_thread WHERE id = {}", id);
+  println!("sql={}", sql);
+  conn.execute(
+      &sql,
+      (),
+  ).await.map_err(|e| e.to_string())?;
+
+  Ok(1)
+}

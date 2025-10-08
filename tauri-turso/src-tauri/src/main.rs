@@ -211,6 +211,14 @@ async fn chat_list_handler(
 }
 
 #[tauri::command]
+async fn chat_delete_handler(id: i64, content: String
+) -> anyhow::Result<i64, String> {
+  println!("id={}", id);
+  let resp = mod_chat::delete_handler(content , id).await?;
+  Ok(1)
+}
+
+#[tauri::command]
 async fn task_create(projectId: i64, content: String, data: String,
 ) -> anyhow::Result<i64, String> {
   println!("projectId={}", projectId);
@@ -260,6 +268,7 @@ fn main() {
             update_data,
             chat_create_handler,
             chat_list_handler,
+            chat_delete_handler,
             task_create,
             task_list,
             task_delete,

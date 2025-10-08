@@ -65,11 +65,12 @@ export const itemsApi = {
 
   threadDelete: async (item: NewItem): Promise<Item> => {
     console.log(item);
+    const ret = await DataUtil.threadDelete("chat_thread", item.id)
+    /*
     const send = {
       content : "chat_thread",
       id: item.id,
     }
-
     const response = await fetch("/api/chat_thread/delete", {
       method: 'POST',
       headers: {
@@ -82,6 +83,7 @@ export const itemsApi = {
     }
 
     return response.json();
+    */
   },
 
 };

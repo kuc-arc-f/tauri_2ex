@@ -100,7 +100,7 @@ const ItemDialog: React.FC<ItemDialogProps> = ({
       console.log("#replyDelete=" + id); 
       const send = {
         content: "chat_thread",
-        id: id,
+        id: Number(id),
       }   
       console.log(send); 
       const res = await itemsApi.threadDelete(send); 

@@ -160,6 +160,21 @@ const DataUtil = {
     }
   },
 
+  threadDelete: async function(content: string, id: number): Promise<any>
+  {
+    try{
+      const retObj = {ret: 500, data: {}}
+    
+      const response = await invoke('chat_delete_handler', { content: content, id: Number(id) });
+      console.log(response);
+      return [];
+    }catch(e){
+      console.error(e);
+      throw new Error('Error, delete')
+
+    }
+  },  
+
   taskItemlist: async function(project_id: number , content: string, order: any): Promise<any>
   {
     try{
