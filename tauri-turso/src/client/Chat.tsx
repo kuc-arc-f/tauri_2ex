@@ -74,13 +74,16 @@ export default function App() {
           <br />
           <span className="ms-2">Id: {row.original.id}</span>
           <span className="ms-2">
-            <button onClick={() => handleEdit(row.original)}
-              className="text-blue-400">[ show ]</button>
+            <button 
+              onClick={() => handleEdit(row.original)}
+              className="mt-3 px-4 py-1.5 border border-blue-500 text-blue-500 rounded-lg hover:bg-blue-50 transition duration-150 text-sm"
+              >Show</button>              
           </span>
-
           <span className="ms-2">
-            <button onClick={() => handleDelete(row.original.id)}
-              className="text-red-400">[ delete ]</button>
+            <button 
+              onClick={() => handleDelete(row.original.id)}
+              className="mt-3 px-4 py-1.5 border border-red-500 text-red-500 rounded-lg hover:bg-red-50 transition duration-150 text-sm"
+              >Delete</button>              
           </span>
         </div>
       ),
@@ -194,86 +197,123 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 pt-2 pb-8">
-      <Head />
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="bg-white rounded-lg shadow pb-8">
-          {/*  */}
-          <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-900">Chat</h1>
-            <button
-              onClick={handleCreate}
-              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
-            >
-              新規作成
-            </button>
+  <>
+    <header 
+    className="fixed top-0 left-0 right-0 bg-white border-b border-gray-400 h-[40px] flex items-center justify-center z-10">
+      <a  href="/">
+        <h1 className="text-lg font-medium text-gray-700">Home</h1>
+      </a>
+    </header>
+    <div className="bg-gray-100 flex mt-[40px]">
+      <aside className="w-64 bg-white shadow-md flex flex-col justify-between">
+        <div>
+          <div className="p-6">
+            <h1 className="text-xl font-semibold text-gray-700 flex items-center">
+              <span className="material-icons mr-2 text-blue-600">Chat</span>
+            </h1>
           </div>
-          {error && (
-            <div className="mx-6 mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-              {error}
-            </div>
-          )}
-
-          <table className="border border-gray-300 bg-gray-100 w-full pb-4">
-            <tbody>
-              {table.getRowModel().rows.map((row) => (
-                <tr key={row.id} className="">
-                  {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className="pt-2 px-2">
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-            {/* ページネーション UI */}
-          <div className="flex items-center gap-2 mt-4">
-            <button
-              className="px-2 py-1 border rounded disabled:opacity-50"
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
-            >
-              ← 前へ
-            </button>
-            <button
-              className="px-2 py-1 border rounded disabled:opacity-50"
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
-            >
-              次へ →
-            </button>
-            <span className="ml-2">
-              Page{" "}
-              <strong>
-                {table.getState().pagination.pageIndex + 1} / {table.getPageCount()}
-              </strong>
-            </span>
-            <select
-              className="ml-2 border p-1"
-              value={table.getState().pagination.pageSize}
-              onChange={(e) => table.setPageSize(Number(e.target.value))}
-            >
-              {[5, 10, 20].map((pageSize) => (
-                <option key={pageSize} value={pageSize}>
-                  {pageSize} rows
-                </option>
-              ))}
-            </select>
-          </div>            
+          <nav className="mt-2">
+            <span className="block px-6 py-2 text-xs text-gray-500 uppercase">Main Menu</span>
+            <a className="flex items-center px-6 py-3 bg-blue-600 text-white" href="#">
+              <span className="material-icons mr-3"></span>
+              Dashboard
+            </a>
+            <a className="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-200" href="#">
+              <span className="material-icons mr-3 text-gray-400"></span>
+              Thread
+            </a>
+            <a className="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-200" href="#">
+              <span className="material-icons mr-3 text-gray-400"></span>
+              BookMark
+            </a>
+          </nav>
         </div>
+        <div className="pb-[180px]">
+          <span className="block px-6 py-2 text-xs text-gray-500 uppercase">Preferences</span>
+          <a className="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-200" href="#">
+            <span className="material-icons mr-3 text-gray-400">settings</span>
+            Settings
+          </a>
+          <a className="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-200" href="#">
+            <span className="material-icons mr-3 text-gray-400">logout</span>
+              Log Out
+          </a>
+        </div>
+      </aside>
+      <main className="flex-1 p-6">
+        <div className="px-6 py-2 flex justify-between items-center">
+          <h1 className="text-2xl font-bold text-gray-900"></h1>
+          <button
+            onClick={handleCreate}
+            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+          >
+            新規作成
+          </button>
+        </div>
+        {error && (
+          <div className="mx-6 mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+            {error}
+          </div>
+        )}
+        <table className="w-full pb-4">
+          <tbody>
+            {table.getRowModel().rows.map((row) => (
+              <tr key={row.id} className="">
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id} className="pt-2 px-2">
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
-      </div>
+        <div className="flex items-center gap-2 mt-4">
+          <button
+            className="px-2 py-1 border rounded disabled:opacity-50"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            ← 前へ
+          </button>
+          <button
+            className="px-2 py-1 border rounded disabled:opacity-50"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            次へ →
+          </button>
+          <span className="ml-2">
+            Page{" "}
+            <strong>
+              {table.getState().pagination.pageIndex + 1} / {table.getPageCount()}
+            </strong>
+          </span>
+          <select
+            className="ml-2 border p-1"
+            value={table.getState().pagination.pageSize}
+            onChange={(e) => table.setPageSize(Number(e.target.value))}
+          >
+            {[5, 10, 20].map((pageSize) => (
+              <option key={pageSize} value={pageSize}>
+                {pageSize} rows
+              </option>
+            ))}
+          </select>
+        </div> 
 
-      <ItemDialog
-        isOpen={dialogOpen}
-        onClose={() => setDialogOpen(false)}
-        onSave={handleSave}
-        item={editingItem}
-        mode={dialogMode}
-        replyArr={replyItems}
-        addReply={handleAddReply}
-      />      
+      </main>
     </div>
+    <ItemDialog
+      isOpen={dialogOpen}
+      onClose={() => setDialogOpen(false)}
+      onSave={handleSave}
+      item={editingItem}
+      mode={dialogMode}
+      replyArr={replyItems}
+      addReply={handleAddReply}
+    />      
+  </>
   );
 }
