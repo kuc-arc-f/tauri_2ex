@@ -69,9 +69,27 @@ async fn user_create(
 
   conn.execute(
       &sql,
-      params![name, email, phc],
+      params![name, email.clone(), phc],
   ).await.map_err(|e| e.to_string())?;
-  Ok(1)
+
+  let selectSql = "SELECT id, name , email , password FROM user WHERE email = ?1";
+  println!("sql={}", selectSql);
+  let mut rows = conn.query(&selectSql,
+      params![email.clone()],
+  ).await.unwrap();
+
+  let mut db_id: i64 = 0;
+  let mut count = 0;
+  while let Some(row) = rows.next().await.unwrap() {
+      let id: i64 = row.get(0).unwrap();
+      db_id = id;
+      count = count + 1;
+  }  
+  println!("count={} db_id={}", count, db_id);
+  if count == 0 {
+    return Err("error , user count= 0 Login failed".to_string());
+  }  
+  Ok(db_id)
 }
 
 #[tauri::command]

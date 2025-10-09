@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Item, NewItem } from '../types/Item';
 import { invoke } from '@tauri-apps/api/core';
+import { useNavigate } from 'react-router-dom';
+import LibCookie from '../../lib/LibCookie'
+const AUTH_KEY = "user_auth"
 
 interface ItemDialogProps {
   isOpen: boolean;
@@ -17,6 +20,7 @@ const Signup: React.FC<ItemDialogProps> = ({
   item,
   mode,
 }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<NewItem>({
     name: '',
     email: '',
@@ -72,13 +76,17 @@ const Signup: React.FC<ItemDialogProps> = ({
       setErrors(newErrors);
       return;
     }
-    //
-    const response = await invoke(
-      'user_create', 
-      { name: formData.name, email: formData.email , password: formData.password }
-    );    
+    try{
+      const response = await invoke(
+        'user_create', 
+        { name: formData.name, email: formData.email , password: formData.password }
+      );
+      console.log("response=", response);
+      LibCookie.setCookie(AUTH_KEY, response)
+      navigate('/')    
+      //onClose();
+    }catch(e){console.error(e) }
     //onSave(formData);
-    onClose();
   };
 
   if (!isOpen) return null;

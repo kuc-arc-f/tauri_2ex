@@ -16,6 +16,7 @@ function Home() {
     if(!value){
       navigate('/login')
     }
+    console.log("uid=", value);
   }, []);
 
   const logout = function() {
