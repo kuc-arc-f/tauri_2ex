@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client'
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import { Item, NewItem } from './types/Item';
-import { itemsApi } from './TaskProject/api';
-import ItemDialog from './TaskProject/ItemDialog';
-import dbUtil from './TaskProject/db';
+import { itemsApi } from './ItemPrice/api';
+import ItemDialog from './ItemPrice/ItemDialog';
+import dbUtil from './ItemPrice/db';
+
 import {
   useReactTable,
   getCoreRowModel,
@@ -12,13 +12,12 @@ import {
   flexRender,
   ColumnDef,
 } from "@tanstack/react-table";
-import Head from '../components/HeadHome';
-
+import Head from '../components/Head';
 let sqlDb = null;
 let sortName = "asc";
 let sortAge = "asc";
 let sortWeight = "asc";
-const CONTENT = "task_project";
+const CONTENT = "mcp_diary";
 
 type Person = {
   id: number;
@@ -50,12 +49,11 @@ export default function App() {
     try {
       setLoading(true);
       const data = await itemsApi.getAll(CONTENT);
-      console.log(data)
       setDbItems(data);
-
     } catch (err) {
-      console.error(err);
       setError('アイテムの取得に失敗しました');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -68,22 +66,27 @@ export default function App() {
       header: "ID", 
       cell: ({ row }) => (
         <div className="rounded p-2 bg-white">
-          <h3 className="text-2xl font-bold ms-2">{row.original.data.name}</h3>
-          <span className="ms-2">ID: {row.original.id}</span>
-          
-          <span className="ms-2">
-            <Link to={`/task_item?project_id=${row.original.id}`}>
-              <button 
-              className="text-blue-600 hover:text-blue-800 font-medium px-2 py-1 border border-blue-600 rounded"
-              >Show</button>            
-            </Link>
-          </span>
-          <span className="ms-2">
-            <button onClick={() => handleEdit(row.original)}
-            className="text-blue-600 hover:text-blue-800 font-medium px-2 py-1 border border-blue-600 rounded"
-            >Edit
-            </button>
-          </span>
+          <span className="ms-2">Name :{row.original.data.name}</span>
+          <span className="ms-2">Price :{row.original.data.price}</span>
+          <br />
+          {/*
+          <h3 className="text-1xl font-bold">{row.original.data.text_list}</h3>
+          */}
+          <div className="mt-2">
+            <span className="ms-2">Id: {row.original.id}</span>
+              <span className="ms-2">
+                {/*
+                <button
+                  onClick={() => handleEdit(row.original)}
+                  className="text-indigo-600 hover:text-indigo-900 mr-4"
+                >
+                  [ Show ]
+                </button>            
+                */}
+                <button onClick={() => handleDelete(row.original.id)}
+                  className="text-red-400">[ delete ]</button>
+              </span>
+          </div>
         </div>
       ),
     },
@@ -106,7 +109,7 @@ export default function App() {
   // 編集ダイアログを開く
   const handleEdit = (item: Item) => {
     console.log(item);
-    item.name = item.data.name;
+    item.text = item.data.text;
     setDialogMode('edit');
     setEditingItem(item);
     setDialogOpen(true);
@@ -119,8 +122,7 @@ export default function App() {
       if (dialogMode === 'create') {
         await itemsApi.create(itemData);
       } else if (editingItem) {
-        const target = {name: itemData.name}
-        await itemsApi.update(editingItem.id, target);
+        await itemsApi.update(editingItem.id, itemData);
       }
       await fetchItems();
       setError(null);
@@ -141,6 +143,11 @@ export default function App() {
       setError('削除に失敗しました');
     }
   };
+
+  const sortTest = async function(){
+      const target = await dbUtil.getItems(sqlDb);
+      console.log(target);
+  }
 
   const sortStart = async function(col , order){
       const target = await dbUtil.sortItem(sqlDb, col, order);
@@ -185,34 +192,13 @@ export default function App() {
         <div className="bg-white rounded-lg shadow pb-8">
           {/*  */}
           <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-900">Projects</h1>
-            <button
-              onClick={handleCreate}
-              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
-            >
-              新規作成
-            </button>
+            <h1 className="text-2xl font-bold text-gray-900">ItemPrice</h1>
           </div>
           {error && (
             <div className="mx-6 mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
               {error}
             </div>
           )}
-          {/*
-          <div className="px-6 py-2 border-b border-gray-200 flex justify-between items-center">
-            Search:
-            <input
-              type="text"
-              className="border border-gray-300 rounded-md px-2 py-1"
-              placeholder="Search by name"
-              defaultValue={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <button onClick={() => {handleSearch();}}
-              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
-            >Search</button>
-          </div>          
-          */}
 
           <table className="border border-gray-300 bg-gray-100 w-full pb-4">
             <tbody>

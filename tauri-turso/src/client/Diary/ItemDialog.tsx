@@ -27,15 +27,15 @@ const ItemDialog: React.FC<ItemDialogProps> = ({
   useEffect(() => {
     if (item && mode === 'edit') {
       setFormData({
-        name: item.name,
-        //age: item.age,
-        //weight: item.weight,
+        text: item.text,
+        age: item.age,
+        weight: item.weight,
       });
     } else {
       setFormData({
-        name: "",
-        //age: "",
-        //weight: "",
+        text: "",
+        age: "",
+        weight: "",
       });
     }
     setErrors({});
@@ -77,30 +77,31 @@ const ItemDialog: React.FC<ItemDialogProps> = ({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
         <h2 className="text-xl font-bold mb-4">
-          {mode === 'create' ? 'アイテム作成' : 'アイテム編集'}
+          {mode === 'create' ? 'Sortアイテム作成' : 'アイテム詳細'}
         </h2>
         
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Title */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              name *
+              text *
             </label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
+            <textarea
+              disabled={true}
+              rows={10}
+              name="text"
+              value={formData.text}
               className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                errors.name ? 'border-red-500' : 'border-gray-300'
+                errors.text ? 'border-red-500' : 'border-gray-300'
               }`}
             />
-            {errors.name && (
-              <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+            {errors.text && (
+              <p className="text-red-500 text-sm mt-1">{errors.text}</p>
             )}
           </div>
 
-{/*
+          {/* Content */}
+          {/*
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               age
@@ -125,10 +126,8 @@ const ItemDialog: React.FC<ItemDialogProps> = ({
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-
-*/}
-
-
+          */}
+          
           {/* Buttons */}
           <div className="flex justify-end space-x-2 pt-4">
             <button
@@ -138,12 +137,14 @@ const ItemDialog: React.FC<ItemDialogProps> = ({
             >
               キャンセル
             </button>
+            {/*
             <button
               type="submit"
               className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
             >
               {mode === 'create' ? '作成' : '更新'}
             </button>
+            */}
           </div>
         </form>
       </div>

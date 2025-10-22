@@ -13,12 +13,15 @@ function Page() {
         <Link to="/table2">&nbsp; [ table2 ]</Link>
         <hr />
         <Link to="/chat" className="ms-2">[ chat ]</Link>
-        <Link to="/task_project" className="ms-2">[ task ]</Link>
+        <hr />
+        <span className="ms-2">MCP</span>
+        <Link to="/diary" className="ms-2">[ diary ]</Link>
+        <Link to="/item_price" className="ms-2">[ itemPrice ]</Link>
         <hr />
     </div>
     );
 }
 export default Page;
 /*
-<span><a href="/table2"> [ table2 ]</a></span>
+<Link to="/task_project" className="ms-2">[ task ]</Link>
 */

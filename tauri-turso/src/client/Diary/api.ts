@@ -1,13 +1,28 @@
 import { Item, NewItem } from '../types/Item';
 import DataUtil from '../../lib/DataUtil'
-const CONTENT = "task_project";
+
+const CONTENT = "mcp_diary";
 
 export const itemsApi = {
   getAll: async (content: string): Promise<Item[]> => {
     const resp = await DataUtil.list(CONTENT, "desc")
     console.log(resp)
-    return resp
-    //console.log(json);
+    //return resp
+    let dataValue = {};
+    const newItems = [];
+    resp.forEach((element) => {
+      //console.log(element.data.text)
+      try{
+        element.data.text_list = element.data.text.substring(0, 50);;
+        //dataValue = JSON.parse(element.data);
+        //element.data = dataValue;
+      }catch(e){
+        console.error(e);
+      }
+      console.log(element)
+      newItems.push(element);
+    });    
+    return newItems;
   },
 
   getById: async (id: number): Promise<Item> => {
@@ -22,30 +37,17 @@ export const itemsApi = {
     console.log(item);
     const target =  JSON.stringify(item);  
     console.log(target)
-    const ret = await DataUtil.create(CONTENT, target)    
-    console.log(ret)
+    const ret = await DataUtil.create(CONTENT, target)
   },
 
   update: async (id: number, item: Partial<NewItem>): Promise<Item> => {
+    item.id = id;
     const target =  JSON.stringify(item);  
     console.log(target)
     const ret = await DataUtil.update(id, CONTENT, target)
   },
 
   delete: async (id: number): Promise<void> => {
-    const item = {
-      content : CONTENT,
-      id: id 
-    }
-    const response = await fetch(`/api/data/delete`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(item),
-    });
-    if (!response.ok) {
-      throw new Error('Failed to delete item');
-    }
+    const ret = await DataUtil.delete(CONTENT, id)
   },
 };
