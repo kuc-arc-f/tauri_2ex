@@ -63,18 +63,16 @@ const GanttChart = ({ tasks , open}) => {
         </thead>
         <tbody>
           {tasks.map((task) => (
-            <tr key={task.id}>
+            <tr key={task.id} 
+            onClick={()=>{ open(task) }}            
+            >
               <td className="task-name border p-0.5">{task.data.title}</td>
               {dates.map((date, index) => (
                 <td
                   key={index}
-                  className={isDateInTask(date, task) ? 'task-active' : 'task-inactive'}
-                  onClick={()=>{
-                    const v = isDateInTask(date, task);
-                    console.log("v=" ,v)
-                    if(v){ open(task) }
-                  }}
-                
+                  className={isDateInTask(date, task) ? 'task-active border' : 'task-inactive border border-gray-200'
+                  }
+
                 >
                 </td>
               ))}
