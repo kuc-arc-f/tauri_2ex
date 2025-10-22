@@ -1,6 +1,6 @@
 ﻿# tauri_2ex
 
- Version: 0.9.1
+ Version: 0.9.2
 
  Author  : 
 
@@ -29,11 +29,12 @@ https://zenn.dev/knaka0209/scraps/21dfb8fdb3f9c0
 
 ![img1](/image/ss1008a12.png)
 
-* tauri-turso/task-edit
 
-![img1](/image/ss1008a13.png)
+***
+### Chage Log
 
-
+* VER_0_9_2: tauri-task add
+* VER_0_9_1: new
 
 
 ***
