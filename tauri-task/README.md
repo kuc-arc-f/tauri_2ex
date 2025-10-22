@@ -41,6 +41,10 @@ npm run tauri dev
 
 ![img1](/image/tauri-task-2.png)
 
+***
+### blog
+
+https://zenn.dev/knaka0209/scraps/5559779b9bc769
 
 ***
 
