@@ -40,6 +40,10 @@ npm run tauri build
 
 ![img1](/image/tauri-rag.png)
 
+***
+### blog
+
+https://zenn.dev/knaka0209/scraps/817f10feb237ab
 
 ***
 
