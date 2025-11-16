@@ -35,6 +35,11 @@ npm run tauri dev
 ```
 npm run tauri build
 ```
+***
+* images
+
+![img1](/image/tauri-rag.png)
+
 
 ***
 
