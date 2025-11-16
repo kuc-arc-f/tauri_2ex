@@ -22,7 +22,7 @@ Tauri Rust , RAG Search
 
 ```
 POSTGRES_CONNECTION_STR=postgres://postgres:admin@localhost/postgres
-GEMINI_API_KEY=touy-key
+GEMINI_API_KEY=your-key
 ```
 
 ***
