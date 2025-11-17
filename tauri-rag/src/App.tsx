@@ -6,9 +6,12 @@ import "./input.css";
 
 function App() {
   const [text, setText] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const chatStart = async function(){
     try{    
+      setText("");
+      setIsLoading(false);
       const elem = document.getElementById("input_text") as HTMLInputElement;
       let inText = "";
       if(elem){
@@ -16,6 +19,7 @@ function App() {
       };
       console.log("inText=", inText);
       if(!inText){ return; }
+      setIsLoading(true);
       const resp = await invoke("rag_search", { query: inText })
       const json = JSON.parse(resp)
       if(json.candidates[0] && json.candidates[0].content.parts[0]){
@@ -23,7 +27,8 @@ function App() {
         console.log("text=", mdText)
         const htm = marked.parse(mdText);
         setText(htm);
-      }       
+      }
+      setIsLoading(false);       
     } catch(e){
       console.error(e);
     }
@@ -46,7 +51,12 @@ function App() {
       > GO
       </button>
       <div dangerouslySetInnerHTML={{ __html: text }} id="get_text_wrap"
-      className="mb-8 p-2 bg-gray-100" />
+      className="mb-2 p-2 bg-gray-100" />
+      {isLoading ? (
+        <div 
+        className="animate-spin rounded-full h-8 w-8 mx-4 border-t-4 border-b-4 border-blue-500">
+        </div>
+      ): null}      
       <hr className="my-1" />
     </div>
   </div>
