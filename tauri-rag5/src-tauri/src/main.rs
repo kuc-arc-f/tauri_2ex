@@ -78,7 +78,7 @@ async fn EmbedUserQuery(query :String) -> Vec<f32> {
     let body = json!({
       "model": &MODEL_NAME.to_string(),
       "content": {"parts":[{"text": query.to_string()}]},
-      "output_dimensionality": 1024
+      //"output_dimensionality": 1024
     });
 
     let items : Vec<f32> = Vec::new();
