@@ -192,7 +192,7 @@ async fn rag_search(query: String,
     }    
 
     let input = CheckSimalirity(query).await;
-    let send_text = format!("日本語で、回答して欲しい。\n{}\n", input);
+    let send_text = format!("日本語で、回答して欲しい。\n要約して欲しい。\n{}\n", input);
     //println!("send_text={}\n", send_text);
     let new_text = format!("以下のルールを必ず守ってください。\n <think> タグや思考過程は一切出力しない\n\n {}", send_text);
     println!("new_text={}\n", new_text);
