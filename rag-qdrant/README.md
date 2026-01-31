@@ -12,7 +12,7 @@
 Tauri RAG Search
 
 * qdrant use
-* lfm2.5-thinking
+* gemma3-27b , Gemini-API
 * embedding: gemini-embedding-001
 * rustc 1.90.0
 
