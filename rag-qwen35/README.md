@@ -2,7 +2,7 @@
 
  Version: 0.9.1
 
- date    : 2026/01/31
+ date    : 2026/03/05
  
  update  :
 
@@ -31,4 +31,6 @@ npm run tauri build
 ```
 
 ***
+### Blog
 
+https://zenn.dev/knaka0209/scraps/fc51265a478fb4
